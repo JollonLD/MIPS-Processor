@@ -195,6 +195,7 @@ module UnidadeControle (opcode, JAL, JR, HLT, DadoSel, PilhaE, PilhaOP, SZ, ResS
 				SZ = 1;
 				RegWrite = 1;
 				IMsel = 2'b01;
+				ALUsrc = 1;
 			end
 			
 			// lw
