@@ -30,10 +30,10 @@ module BancoRegistradores(clock, addr_rs, addr_rt, addr_rd, escrita_dado, rp, Re
 	
 	// inicializa o endereço salvo no $rp que será usado como topo da pilha na memória
 	initial begin
-		banco[addr_rp] = 32'd224;
+		banco[addr_rp] = 32'd25;
 	end
 	
-	always @ (posedge clock) begin
+	always @ (negedge clock) begin
 		
 		banco[addr_zero] = 32'd0;
 		

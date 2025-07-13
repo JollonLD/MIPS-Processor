@@ -1,6 +1,4 @@
-module Processador (clk, switches, confirm, reset, saida_pc, endereco_RS, endereco_RT, endereco_RD, dado1_entrada_ULA, dado2_entrada_ULA, saida_ULA, ula_Zero, intrucao_lida, 
-	endereco_acesso_memoria, dado_leitura_memoria, dado_escrita_banco, saida_dbg_io, JAL, JR, HLT, DadoSel, PilhaE, PilhaOP, SZ, ResSel, ALUOp, MemToReg, 
-	RegWrite, ALUsrc, MemRead, MemWrite, Branch, RSsel, RTsel, IMsel, Jump, IOE, IOsel, stall, clock_div, l0, l1, l2, l3, l4, l5, l6, l7);
+module Processador_Jonas (clk, switches, confirm, reset, HEX0, HEX1, HEX2, HEX3, HEX4, HEX5, HEX6, HEX7);
 	 
 	input clk;
 	input reset;
@@ -31,31 +29,6 @@ module Processador (clk, switches, confirm, reset, saida_pc, endereco_RS, endere
 	wire [1:0] IMsel;
 	wire [3:0] ALUOp;
 
-	
-	output        SZ;
-	output        JAL;
-	output        JR;
-	output        HLT;
-	output        Jump;
-	output        Branch;
-	output        RegWrite;
-	output        RSsel;
-	output        RTsel;
-	output        DadoSel;
-	output        ResSel;
-	output        PilhaE;
-	output        PilhaOP;
-	output        ALUsrc;
-	output        MemToReg;
-	output        MemRead;
-	output        MemWrite;
-	output		  IOE;
-	output		  IOsel;
-	output		  stall;
-	output [1:0]  IMsel;
-	output [3:0]  ALUOp;
-	
-	
 	wire [31:0] instrucao;
 	wire [31:0] dado1; 
 	wire [31:0] dado2;
@@ -83,33 +56,28 @@ module Processador (clk, switches, confirm, reset, saida_pc, endereco_RS, endere
 	wire [31:0] saida_io;
 	wire Zero;
 	wire and_branch;
-	output [6:0] l0, l1, l2, l3, l4, l5, l6, l7;
+	wire confirm_limpo;
+	wire ok;
 	
-	
-	output ula_Zero;
-	output [4:0]  saida_pc;
-	output [5:0]  endereco_RS;
-	output [5:0]  endereco_RT;
-	output [5:0]  endereco_RD;
-	output [31:0] dado1_entrada_ULA;
-	output [31:0] dado2_entrada_ULA;
-	output [31:0] saida_ULA;  
-	output [31:0] intrucao_lida;
-	output [7:0]  endereco_acesso_memoria;
-	output [31:0] dado_leitura_memoria;
-	output [31:0] dado_escrita_banco;
-	output [31:0] saida_dbg_io;
-	output clock_div;
+	output [6:0] HEX0, HEX1, HEX2, HEX3, HEX4, HEX5, HEX6, HEX7;
 	
 	wire clock;
+	
+	assign ok = ~confirm;
+	
+	DBounce db (
+		.clk(clk),       // Clock do sistema (ex.: 50 MHz)
+		.rst(reset),       // Reset síncrono
+		.noisy(ok),     // Entrada com bouncing
+		.clean(confirm_limpo) // Saída estabilizada
+	);
+	
 	
 	Divisor_Freq div (
 		.clock_in(clk),
 		.reset(reset),
 		.clock_out(clock)
 	);
-	
-	assign clock_div = clock;
 	
 	Adder somador_1 (
 		.a(32'd1),
@@ -151,7 +119,7 @@ module Processador (clk, switches, confirm, reset, saida_pc, endereco_RS, endere
 		.reset(reset),
 		.HLT(HLT),
 		.stall(stall),
-		.confirm(confirm),
+		.confirm(confirm_limpo),
 		.in_pc(in_pc), 
 		.out_pc(out_pc)  
 	);	
@@ -306,30 +274,16 @@ module Processador (clk, switches, confirm, reset, saida_pc, endereco_RS, endere
 		.entrada_dado(in1),
 		.IOE(IOE),
 		.IOsel(IOsel),
-		.confirm(confirm),
+		.confirm(confirm_limpo),
 		.saida_dado(saida_io),
-		.HEX0(l0),
-		.HEX1(l1),
-		.HEX2(l2),
-		.HEX3(l3),
-		.HEX4(l4),
-		.HEX5(l5), 
-		.HEX6(l6),
-		.HEX7(l7)
+		.HEX0(HEX0),
+		.HEX1(HEX1),
+		.HEX2(HEX2),
+		.HEX3(HEX3),
+		.HEX4(HEX4),
+		.HEX5(HEX5),
+		.HEX6(HEX6),
+		.HEX7(HEX7)
 	);
-	
-	assign saida_dbg_io				  = saida_io;
-	assign saida_pc                 = out_pc[4:0];
-	assign endereco_RS              = addr_rs;
-	assign endereco_RT              = addr_rt;
-	assign endereco_RD              = addr_rd;
-	assign dado1_entrada_ULA        = in1;
-	assign dado2_entrada_ULA        = in2;
-	assign saida_ULA                = resultado;
-	assign intrucao_lida            = instrucao;
-	assign endereco_acesso_memoria  = addr_leitura[7:0];
-	assign dado_leitura_memoria     = mem_out;
-	assign dado_escrita_banco       = escrita_dado;
-	assign ula_Zero					  = Zero;
- 
+	 
 endmodule

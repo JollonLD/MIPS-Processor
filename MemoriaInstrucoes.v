@@ -6,7 +6,7 @@ module MemoriaInstrucoes
 );
 
 	// Declare the ROM variable
-	reg [DATA_WIDTH-1:0] rom[2**ADDR_WIDTH-1:0];
+	reg [DATA_WIDTH-1:0] rom[12:0];
 	
 	initial begin
 		$readmemb("codigo_teste.txt", rom);
