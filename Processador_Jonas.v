@@ -66,10 +66,10 @@ module Processador_Jonas (clk, switches, confirm, reset, HEX0, HEX1, HEX2, HEX3,
 	assign ok = ~confirm;
 	
 	DBounce db (
-		.clk(clk),       // Clock do sistema (ex.: 50 MHz)
-		.rst(reset),       // Reset síncrono
-		.noisy(ok),     // Entrada com bouncing
-		.clean(confirm_limpo) // Saída estabilizada
+		.clk(clk),      
+		.rst(reset),    
+		.noisy(ok),
+		.clean(confirm_limpo)
 	);
 	
 	
@@ -240,8 +240,8 @@ module Processador_Jonas (clk, switches, confirm, reset, HEX0, HEX1, HEX2, HEX3,
 
 	MemoriaDados mem_dados (
 		.clk(clock),
-		.data(dado2),	
-		.addr(addr_leitura[7:0]),
+		.data(in1),	
+		.addr(addr_leitura[5:0]),
 		.MemWrite(MemWrite),
 		.MemRead(MemRead),
 		.q(mem_out)  
@@ -274,7 +274,6 @@ module Processador_Jonas (clk, switches, confirm, reset, HEX0, HEX1, HEX2, HEX3,
 		.entrada_dado(in1),
 		.IOE(IOE),
 		.IOsel(IOsel),
-		.confirm(confirm_limpo),
 		.saida_dado(saida_io),
 		.HEX0(HEX0),
 		.HEX1(HEX1),

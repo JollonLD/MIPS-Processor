@@ -16,6 +16,6 @@ module MemoriaDados
 			ram[addr] <= data;
 	end
 	
-	assign q = MemRead ? ram[addr] : 32'b0;
+	assign q = ram[addr];
 	
 endmodule

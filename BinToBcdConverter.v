@@ -9,7 +9,7 @@ module BinToBcdConverter (
     output reg [3:0] bcd6,
     output reg [3:0] bcd7
 );
-
+	
     always @(*) begin
 		  bcd0 = binary_in % 10;
 		  bcd1 = (binary_in / 10) % 10;

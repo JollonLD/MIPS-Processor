@@ -24,18 +24,23 @@ module BancoRegistradores(clock, addr_rs, addr_rt, addr_rd, escrita_dado, rp, Re
 	parameter addr_ra   = 6'b000001;
 	parameter addr_rp   = 6'b000011;
 	
+	reg p_clk;
 	
 	reg [31:0]banco[63:0]; // Banco de Registradores 64x32
 	
-	
-	// inicializa o endereço salvo no $rp que será usado como topo da pilha na memória
 	initial begin
-		banco[addr_rp] = 32'd25;
+		p_clk = 1'b1;
 	end
 	
+	// inicializa o endereço salvo no $rp que será usado como topo da pilha na memória
 	always @ (negedge clock) begin
 		
 		banco[addr_zero] = 32'd0;
+		
+		if (p_clk) begin
+			banco[addr_rp] = 32'd25;
+			p_clk = 1'b0;
+		end
 		
 		if (RegWrite) begin
 			banco[addr_rd] = escrita_dado;

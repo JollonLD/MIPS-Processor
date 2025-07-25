@@ -3,7 +3,6 @@ module ModuloEntradaSaida (
     input [31:0] entrada_dado,
     input IOE,
     input IOsel,
-	 input confirm,
     output reg [31:0] saida_dado,
 
     output [6:0] HEX0, 
@@ -19,17 +18,22 @@ module ModuloEntradaSaida (
     // Sinais BCD individuais
     wire [3:0] bcd0, bcd1, bcd2, bcd3;
     wire [3:0] bcd4, bcd5, bcd6, bcd7;
-
-    // Valor que vai ser exibido
+	
+	 // Valor que vai ser exibido
     reg [31:0] reg_out;
+	
+	initial begin
+		reg_out = 32'd0;
+	end
 
     // Logica de seleção: mostra switches ou entrada
     always @(*) begin
+	 
         if (IOE) begin
 				if (IOsel) begin
 					saida_dado = switch_dado + 32'b0; // concatena zeros nos bits mais altos
 				end
-				else if (confirm) begin
+				else begin
 					reg_out = entrada_dado;
 				end
 		  end

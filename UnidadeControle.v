@@ -257,6 +257,7 @@ module UnidadeControle (opcode, JAL, JR, HLT, DadoSel, PilhaE, PilhaOP, SZ,
 				PilhaE = 1;
 				PilhaOP = 1;
 				MemWrite = 1;
+				DadoSel = 1;
 			end
 			// POP
 			6'b011111:begin
@@ -264,6 +265,7 @@ module UnidadeControle (opcode, JAL, JR, HLT, DadoSel, PilhaE, PilhaOP, SZ,
 				PilhaOP = 1;
 				MemRead = 1;
 				MemToReg = 1;
+				DadoSel = 1;
 			end
 			
 			// IN
