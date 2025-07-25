@@ -6,16 +6,16 @@ This repository contains the Verilog HDL implementation of a 32-bit MIPS-like pr
 
 ## Features
 
-* [cite_start]**MIPS-like Architecture (RISC Principles)**: Designed for simplicity and efficiency in instruction execution. [cite: 2]
+* **MIPS-like Architecture (RISC Principles)**: Designed for simplicity and efficiency in instruction execution.
 * **32-bit Fixed Instruction Size**: Uniform instruction format for simplified decoding and pipelining.
 * **64 General-Purpose Registers**: Including dedicated registers for zero (`$zero`), return address (`$ra`), and stack pointer (`$rp`).
 * **Harvard Architecture**: Separate instruction and data memories for simultaneous access, enhancing efficiency.
 * **Monocycle Datapath**: Each instruction completes within a single clock cycle.
 * **SISD (Single Instruction, Single Data)**: Processes one instruction and one data stream at a time.
-* [cite_start]**36 Distinct Instructions**: Covering a wide range of operations (arithmetic, logical, data transfer, conditional/unconditional jumps, stack operations, I/O). [cite: 2]
-* [cite_start]**6 Instruction Formats**: Optimized for various operation types, including register-to-register, immediate, and jump instructions. [cite: 2]
-* [cite_start]**3 Addressing Modes**: Supports Direct, Register Indirect, and Base-Displacement addressing for memory access. [cite: 2]
-* [cite_start]**FPGA Implementation**: Designed and tested on an Altera DE2-115 Cyclone IV FPGA. [cite: 2]
+* **36 Distinct Instructions**: Covering a wide range of operations (arithmetic, logical, data transfer, conditional/unconditional jumps, stack operations, I/O).
+* **6 Instruction Formats**: Optimized for various operation types, including register-to-register, immediate, and jump instructions.
+* **3 Addressing Modes**: Supports Direct, Register Indirect, and Base-Desplacement addressing for memory access.
+* **FPGA Implementation**: Designed and tested on an Altera DE2-115 Cyclone IV FPGA.
 
 ## Repository Contents
 
@@ -53,60 +53,26 @@ The following core modules are implemented in Verilog HDL:
         * **Fibonacci Sequence**: Calculates Fibonacci numbers for a given input position.
         * **JR and JAL Test**: Demonstrates the functionality of Jump Register and Jump and Link instructions.
 
-## Getting Started
-
-To simulate or deploy this processor, you will need:
-
-### Prerequisites
-
-* A Verilog HDL simulator (e.g., ModelSim, QuestaSim).
-* An FPGA development environment (e.g., Intel Quartus Prime for Altera FPGAs).
-* An Altera DE2-115 Cyclone IV FPGA board (for hardware deployment).
-
-### Simulation
-
-1.  **Clone the repository**:
-    ```bash
-    git clone [https://github.com/your-username/your-repo-name.git](https://github.com/your-username/your-repo-name.git)
-    cd your-repo-name
-    ```
-2.  **Open your Verilog simulator.**
-3.  **Compile all `.v` files.** Ensure `Processador_Jonas.v` is the top-level entity.
-4.  **Load `codigo_teste.txt` into the `MemoriaInstrucoes` module's initialization.** (This is handled by `$readmemb("codigo_teste.txt", rom);` in `MemoriaInstrucoes.v`).
-5.  **Run the simulation.** Observe the waveforms for control signals, register values, memory access, and I/O. Expected waveforms and their analyses are provided in the `Imagens/` directory.
-
-### FPGA Deployment
-
-1.  **Open Intel Quartus Prime (or your preferred FPGA IDE).**
-2.  **Create a new project** and add all `.v` files to it. Set `Processador_Jonas.v` as the top-level entity.
-3.  **Configure pin assignments** according to your DE2-115 board's specific pinout for clock, reset, switches (`switches[9:0]`), confirm button (`confirm`), and 7-segment displays (`HEX[0-7]`).
-4.  **Synthesize, Fit, and Assemble the design.**
-5.  **Program the FPGA** with the generated `.sof` file.
-6.  **Interact with the processor:**
-    * Use the DIP switches to provide input values for instructions like `IN`.
-    * Press the designated confirm button (connected to `confirm`) to validate input or advance paused execution (e.g., after an `IN` instruction).
-    * Observe the results on the 7-segment displays (`OUT` instruction).
-
 ## Results and Verification
 
 The processor's functionality has been rigorously validated through:
 
-* **Extensive Module-Level Simulations**: Each individual Verilog module (ULA, Register File, Memories, PC, Control Unit, etc.) was simulated and verified for correct behavior. [cite_start]Waveforms and detailed analyses for key modules are available in the `Imagens/` directory. [cite: 2]
-* [cite_start]**Integrated Datapath Simulations**: Simulations of the fully integrated processor confirmed the correct flow of data and control signals across all interconnected modules. [cite: 2]
+* **Extensive Module-Level Simulations**: Each individual Verilog module (ULA, Register File, Memories, PC, Control Unit, etc.) was simulated and verified for correct behavior. Waveforms and detailed analyses for key modules are available in the `Imagens/` directory.
+* **Integrated Datapath Simulations**: Simulations of the fully integrated processor confirmed the correct flow of data and control signals across all interconnected modules.
 * **Hardware Tests on FPGA**:
-    * [cite_start]**Fibonacci Sequence Calculation**: Successfully demonstrated the processor's ability to handle loops, arithmetic operations, and memory access. [cite: 2]
-    * [cite_start]**JR and JAL Instruction Test**: Verified the functionality of jump and link instructions, confirming correct subroutine calls and returns. [cite: 2]
+    * **Fibonacci Sequence Calculation**: Successfully demonstrated the processor's ability to handle loops, arithmetic operations, and memory access.
+    * **JR and JAL Instruction Test**: Verified the functionality of jump and link instructions, confirming correct subroutine calls and returns.
 
 ## Difficulties Encountered and Future Work
 
 During development, some challenges were faced:
 
-* [cite_start]**Debugging**: Identifying and resolving issues in Verilog code when modules did not function as expected required careful debugging of waveforms. [cite: 2]
-* [cite_start]**Datapath Logic Changes**: Adjustments to the initial Datapath logic were necessary, such as replacing a single I/O multiplexer with internal selection within the I/O module. [cite: 2]
+* **Debugging**: Identifying and resolving issues in Verilog code when modules did not function as expected required careful debugging of waveforms.
+* **Datapath Logic Changes**: Adjustments to the initial Datapath logic were necessary, such as replacing a single I/O multiplexer with internal selection within the I/O module.
 
 Potential areas for future improvement and optimization include:
 
-* [cite_start]**Memory Optimization**: Exploring techniques to optimize memory access times and compilation performance, which were slightly above expectations. [cite: 2]
+* **Memory Optimization**: Exploring techniques to optimize memory access times and compilation performance, which were slightly above expectations.
 * **Pipelining**: Implementing a deeper pipeline to enhance instruction throughput (currently monocycle).
 * **Extended Instruction Set**: Adding more complex instructions or floating-point support.
 
@@ -120,4 +86,4 @@ This project is licensed under the [MIT License](LICENSE) - see the `LICENSE` fi
 
 ## Acknowledgements
 
-This project was developed as part of the "Laboratório de Sistemas Computacionais: Arquitetura e Organização de Computadores" course at the **Universidade Federal de São Paulo (UNIFESP)**, Campus São José dos Campos, Instituto de Ciência e Tecnologia. [cite_start]Special thanks to Prof. Dr. Sérgio Ronaldo Barros dos Santos for guidance and support. [cite: 1, 5]
+This project was developed as part of the "Laboratório de Sistemas Computacionais: Arquitetura e Organização de Computadores" course at the **Universidade Federal de São Paulo (UNIFESP)**, Campus São José dos Campos, Instituto de Ciência e Tecnologia. Special thanks to Prof. Dr. Sérgio Ronaldo Barros dos Santos for guidance and support.
